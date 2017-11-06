@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>33b9f7f8-a4cb-4c59-bb6d-965570d04afd</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>tanh_vs_sigmoid.py</StartupFile>
+    <StartupFile>tanh.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,7 +22,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="tanh_vs_sigmoid.py" />
+    <Compile Include="net.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="sigmoid.py" />
+    <Compile Include="tanh.py" />
+    <Compile Include="__init__.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
