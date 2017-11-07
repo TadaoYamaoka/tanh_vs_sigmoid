@@ -14,7 +14,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--batchsize', '-b', type=int, default=32,
                         help='Number of images in each mini-batch')
-    parser.add_argument('--epoch', '-e', type=int, default=10,
+    parser.add_argument('--epoch', '-e', type=int, default=20,
                         help='Number of sweeps over the dataset to train')
     args = parser.parse_args()
 
@@ -37,6 +37,9 @@ def main():
 
     # Learning loop
     while train_iter.epoch < args.epoch:
+        sum_loss = 0
+        itr = 0
+
         train_batch = train_iter.next()
         x_data = []
         t_data = []
@@ -57,9 +60,12 @@ def main():
         loss.backward()
         optimizer.update()
 
+        sum_loss += loss.data
+        itr += 1
+
         if train_iter.is_new_epoch:
             print('epoch:{} train_loss:{} '.format(
-                train_iter.epoch, loss.data), end='')
+                train_iter.epoch, sum_loss / itr), end='')
 
             sum_test_loss = 0
             sum_test_accuracy = 0

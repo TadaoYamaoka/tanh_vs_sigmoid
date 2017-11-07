@@ -25,7 +25,8 @@
     <Compile Include="net.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="sigmoid.py" />
+    <Compile Include="sigmoid_cross_entropy.py" />
+    <Compile Include="sigmoid_mse.py" />
     <Compile Include="tanh.py" />
     <Compile Include="__init__.py" />
   </ItemGroup>

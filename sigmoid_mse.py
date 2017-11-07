@@ -48,7 +48,7 @@ def main():
             if data[1] % 2 == 0:
                 t_data.append([1])
             else:
-                t_data.append([-1])
+                t_data.append([0])
 
         x = Variable(cuda.to_gpu(np.array(x_data, dtype=np.float32)))
         t = Variable(cuda.to_gpu(np.array(t_data, dtype=np.float32)))
@@ -56,7 +56,7 @@ def main():
         y = model(x)
 
         model.cleargrads()
-        loss = F.mean_squared_error(F.tanh(y), t)
+        loss = F.mean_squared_error(F.sigmoid(y), t)
         loss.backward()
         optimizer.update()
 
@@ -74,22 +74,19 @@ def main():
                 test_batch = test_iter.next()
                 x_test_data = []
                 t_test_data = []
-                t_test_acc_data = []
                 for test_data in test_batch:
                     x_test_data.append(test_data[0].reshape((1, 28, 28)))
                     if test_data[1] % 2 == 0:
                         t_test_data.append([1])
-                        t_test_acc_data.append([1])
                     else:
-                        t_test_data.append([-1])
-                        t_test_acc_data.append([0])
+                        t_test_data.append([0])
 
                 x_test = Variable(cuda.to_gpu(np.array(x_test_data, dtype=np.float32)))
                 t_test = Variable(cuda.to_gpu(np.array(t_test_data, dtype=np.float32)))
-                t_test_acc = Variable(cuda.to_gpu(np.array(t_test_acc_data, dtype=np.int32)))
+                t_test_acc = Variable(cuda.to_gpu(np.array(t_test_data, dtype=np.int32)))
 
                 y_test = model(x_test)
-                sum_test_loss += F.mean_squared_error(F.tanh(y_test), t_test).data
+                sum_test_loss += F.mean_squared_error(F.sigmoid(y_test), t_test).data
                 sum_test_accuracy += F.binary_accuracy(y_test, t_test_acc).data
                 test_itr += 1
 
